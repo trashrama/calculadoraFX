@@ -1,2 +1,2 @@
-# calculaddoraFX
+# calculadoraFX
 Calculadora em JavaFX
