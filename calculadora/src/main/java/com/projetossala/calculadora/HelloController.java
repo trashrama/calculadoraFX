@@ -20,10 +20,11 @@ public class HelloController {
 
     @FXML
     private TextField construcao;
-    private String nAtual;
+    private String nAtual = "";
+    private char op;
+    private Float n1, n2; // pra eu poder pegar null
+    private boolean orgN1 = false;
 
-    private Integer n1, n2;
-    private float r;
     Set<Character> simbolosProibidos = Set.of('+','-', 'x', '/'); // consertar para **
 
 
@@ -31,7 +32,16 @@ public class HelloController {
     private Label resultado;
 
     @FXML
-    private boolean verifica(String c){
+    private float adicao(float n1, float n2){
+        return n1+n2;
+    }
+
+    private float subt(float n1, float n2){
+        return n1-n2;
+    }
+
+    @FXML
+    private boolean repetiu(String c){
 
         // talvez nem vou precisar
         // também não pode deixar começar com algum dos simbolos proibidos
@@ -42,6 +52,7 @@ public class HelloController {
             ant = c.charAt(c.length()-2);
             now = c.charAt(c.length()-1);
 
+
             if (simbolosProibidos.contains(ant) && simbolosProibidos.contains(now))
                 quebrou = true;
          }
@@ -51,17 +62,24 @@ public class HelloController {
     }
 
     @FXML
-    private void organiza(String cons){
+    private boolean organizaN1(){
         int pos = 0;
 
-        for (char c: cons.toCharArray()){
+        for (char c: nAtual.toCharArray()){
             if (simbolosProibidos.contains(c)){
                 if (n1 == null){
-                    n1 = Integer.parseInt(cons.substring(0, pos));
+                    n1 = Float.parseFloat(nAtual.substring(0, pos));
+                    op = c;
+                    nAtual = "";
+                    System.out.println("chegou a termina");
+                    return true;
                 }
+
             }
             pos++;
         }
+
+        return false;
 
     }
 
@@ -69,9 +87,17 @@ public class HelloController {
     @FXML
     private void add(ActionEvent event) {
         Button botaoClicado = (Button) event.getSource();
-        //if (!verifica(construcao.getText()+botaoClicado.getText()))
-        construcao.setText(construcao.getText()+botaoClicado.getText());
-        nAtual += botaoClicado.getText();
+        if (!repetiu(construcao.getText()+botaoClicado.getText())) {
+            construcao.setText(construcao.getText() + botaoClicado.getText());
+            nAtual += botaoClicado.getText();
+            System.out.println(nAtual);
+            if (!orgN1)
+                orgN1 = organizaN1();
+
+
+        }
+
+
     }
     @FXML
     private void del(ActionEvent event){
@@ -79,9 +105,23 @@ public class HelloController {
     }
     @FXML
     private void calcular(ActionEvent event) throws ScriptException {
-        ScriptEngineManager manager = new ScriptEngineManager();
-        ScriptEngine engine = manager.getEngineByName("JavaScript");
-        System.out.println(((String) engine.eval(construcao.getText())));
-        //resultado.setText);
+
+        if (n1 != null){
+            n2 = Float.parseFloat(nAtual);
+            switch(op){
+                case '+':
+                    resultado.setText(String.valueOf(adicao(n1, n2)));
+                    break;
+                case '-':
+                    resultado.setText(String.valueOf(subt(n1, n2)));
+                    break;
+                case 'x':
+                    resultado.setText(String.valueOf(mult(n1, n2)));
+                    break;
+                case 'x':
+                    resultado.setText(String.valueOf(mult(n1, n2)));
+                    break;
+            }
+        }
     }
 }

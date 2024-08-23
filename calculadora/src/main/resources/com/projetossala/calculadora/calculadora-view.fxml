@@ -8,13 +8,17 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" style="-fx-background-color: #231f1f;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projetossala.calculadora.HelloController">
    <children>
       <TextField fx:id="construcao" layoutY="147.0" prefHeight="35.0" prefWidth="400.0" style="-fx-background-color: eaeadc;" />
       <BorderPane prefHeight="147.0" prefWidth="400.0" style="-fx-background-color: #443e3e;">
          <center>
-            <Label fx:id="resultado" BorderPane.alignment="CENTER" />
+            <Label fx:id="resultado" textFill="WHITE" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="DejaVu Sans Condensed Bold" size="23.0" />
+               </font></Label>
          </center></BorderPane>
       <GridPane alignment="TOP_RIGHT" hgap="20.0" layoutX="14.0" layoutY="182.0" prefHeight="319.0" prefWidth="400.0">
         <columnConstraints>
